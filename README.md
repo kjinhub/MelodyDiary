@@ -25,10 +25,11 @@ AI가 일기 내용을 분석해 어울리는 음악을 추천하고, Spotify에
 
 | GPT 추천 + 일기 작성 화면  | Spotify 미리듣기 |
 |------------------------------|----------------|
-|<img src ="https://github.com/kjinhub/MelodyDiary/issues/2#issue-3579689056"> | <img src ="https://github.com/kjinhub/MelodyDiary/issues/1#issue-3579687057">|
+| <img src ="https://github.com/kjinhub/MelodyDiary/issues/1#issue-3579687057"> | <img src ="https://github.com/kjinhub/MelodyDiary/issues/2#issue-3579689056"> |
 
 > 🎧 왼쪽: GPT가 추천한 노래 목록 + 사진 업로드 + 감정 일기 작성 화면  
-> ✍️ 오른쪽: Spotify 미리듣기 
+> ✍️ 오른쪽: Spotify 미리듣기
+> 이미지를 클릭해주면 원본 이미지를 확인하실 수 있습니다 . 
 
 
 
