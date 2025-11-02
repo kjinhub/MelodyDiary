@@ -1,0 +1,18 @@
+body {
+  background-color: #f8f9fb;
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  margin: 0;
+}
+
+.app-container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.app-title {
+  text-align: center;
+  color: #222;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
