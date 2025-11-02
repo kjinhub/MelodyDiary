@@ -23,9 +23,9 @@ AI가 일기 내용을 분석해 어울리는 음악을 추천하고, Spotify에
 
 ## 🌈 Preview
 
-| 일기 작성 화면 | GPT 추천 + Spotify 미리듣기 |
+| 일기 작성 화면 + GPT 추천 | Spotify 미리듣기 |
 |----------------|------------------------------|
-| <img src="https://github.com/kjinhub/MelodyDiary/assets/172707054/abc12345de6789" width="400"/> | <img src="https://github.com/kjinhub/MelodyDiary/assets/172707054/fgh98765ij4321" width="400"/> |
+| [<img src="https://github.com/kjinhub/MelodyDiary/issues/1#issue-3579687057" width="400"/>](https://github.com/kjinhub/MelodyDiary/issues/1#issue-3579687057) | [<img src="https://github.com/kjinhub/MelodyDiary/issues/2#issue-3579689056" width="400"/>](https://github.com/kjinhub/MelodyDiary/issues/2#issue-3579689056) |
 
 
 ---
