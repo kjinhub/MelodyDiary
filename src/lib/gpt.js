@@ -11,7 +11,9 @@ export async function getSongRecommendations(text, retryCount = 0) {
         {
           role: "system",
           content:
-            "너는 음악 큐레이터야. 사용자가 쓴 일기 내용의 분위기에 어울리는 노래 제목과 가수를 3곡 추천해줘.",
+            "너는 음악 큐레이터야. 사용자의 일기 내용을 분석해서 어울리는 노래 3곡을 추천해. " +
+            "출력은 반드시 JSON 배열 형식으로 해. 예시: " +
+            '[{"title":"Love Story","artist":"Taylor Swift"}, {"title":"Someone Like You","artist":"Adele"}, {"title":"Perfect","artist":"Ed Sheeran"}]',
         },
         {
           role: "user",
@@ -24,5 +26,10 @@ export async function getSongRecommendations(text, retryCount = 0) {
   });
 
   const data = await response.json();
-  return data.choices[0].message.content;
+  try {
+    return JSON.parse(data.choices[0].message.content);
+  } catch (e) {
+    console.error("GPT 응답 파싱 오류:", e);
+    return [];
+  }
 }

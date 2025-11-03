@@ -16,15 +16,14 @@ export async function getSpotifyToken() {
   return data.access_token;
 }
 
-export async function searchTrack(query, token) {
+export async function searchTrack(song, token) {
+  const query = `track:${song.title} artist:${song.artist}`;
   const response = await fetch(
     `https://api.spotify.com/v1/search?q=${encodeURIComponent(
       query
     )}&type=track&limit=1`,
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     }
   );
 
