@@ -1,35 +1,23 @@
-import { useState, useEffect } from "react";
-import DiaryEditor from "./components/DiaryEditor";
-import DiaryList from "./components/DiaryList";
-import "./App.css";
+import React, { useState } from "react";
+import Navbar from "./components/Navbar";
+import DiaryList from "./pages/DiaryList";
+import ReportPage from "./pages/ReportPage";
+import DiaryForm from "./components/DiaryForm";
 
-function App() {
-  const [diaries, setDiaries] = useState([]);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("diaries");
-    if (saved) setDiaries(JSON.parse(saved));
-  }, []);
-
-  const addDiary = (newDiary) => {
-    const updated = [newDiary, ...diaries];
-    setDiaries(updated);
-    localStorage.setItem("diaries", JSON.stringify(updated));
-  };
-
-  const deleteDiary = (id) => {
-    const updated = diaries.filter((d) => d.id !== id);
-    setDiaries(updated);
-    localStorage.setItem("diaries", JSON.stringify(updated));
-  };
+export default function App() {
+  const [page, setPage] = useState("diary");
+  const [showForm, setShowForm] = useState(false);
 
   return (
     <div className="app-container">
-      <h1 className="app-title">🎵 Melody Diary</h1>
-      <DiaryEditor onAdd={addDiary} />
-      <DiaryList diaries={diaries} onDelete={deleteDiary} />
+      <Navbar onNavigate={setPage} onNewDiary={() => setShowForm(true)} />
+      {page === "diary" ? <DiaryList /> : <ReportPage />}
+      {showForm && <DiaryForm onClose={() => setShowForm(false)} />}
+      <footer className="footer">
+        MelodyDiary · 당신의 감정을 음악으로 기록하세요 🎵
+        <br />
+        <small>Powered by GPT API & Spotify Embed</small>
+      </footer>
     </div>
   );
 }
-
-export default App;
