@@ -1,0 +1,234 @@
+body {
+  font-family: "Inter", sans-serif;
+}
+
+/* ===== 모달 ===== */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.form-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ===== 헤더 ===== */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #a57dff, #ff7db5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+/* ===== 사진 업로드 ===== */
+.section-title {
+  margin: 1rem 0 0.5rem;
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.photo-upload {
+  border: 2px dashed #d0d0d0;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: #fafafa;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 180px;
+}
+
+.photo-upload:hover {
+  border-color: #a57dff;
+  background-color: #f9f6ff;
+}
+
+.photo-upload.active {
+  border-color: #a57dff;
+  background-color: #f3eaff;
+}
+
+.photo-upload img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  max-height: 140px;
+  object-fit: contain;
+}
+
+.photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+  font-size: 0.95rem;
+}
+
+.photo-placeholder .photo-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ===== 텍스트 ===== */
+textarea {
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  padding: 0.8rem;
+  background-color: #f9f9f9;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+textarea:focus {
+  border-color: #a57dff;
+  box-shadow: 0 0 0 2px rgba(165, 125, 255, 0.1);
+}
+
+/* ===== 곡 추천 버튼 ===== */
+.secondary-button {
+  background: #f0f0f5;
+  color: #555;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+}
+
+.secondary-button:hover {
+  background: #e5e5ed;
+}
+
+.recommend-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* ===== 곡 리스트 ===== */
+.song-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.song-choice button {
+  background: #f8f8ff;
+  border: 1px solid #e9e9ff;
+  border-radius: 10px;
+  padding: 0.7rem;
+  text-align: left;
+  cursor: pointer;
+  color: #555;
+}
+
+.song-choice button:hover {
+  background: #e6e6ff;
+  border-color: #a57dff;
+}
+
+.song-choice button.selected {
+  background: linear-gradient(90deg, #a57dff, #ff7db5);
+  color: white;
+  border: none;
+}
+
+/* ===== 미리듣기 ===== */
+.preview-player {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: #f0f0f5;
+  text-align: center;
+}
+
+.preview-player p {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* ===== 저장/취소 ===== */
+.final-action-block {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.primary-button {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(90deg, #a57dff, #ff7db5);
+  box-shadow: 0 4px 15px rgba(165, 125, 255, 0.4);
+}
+
+.primary-button:hover {
+  box-shadow: 0 6px 20px rgba(165, 125, 255, 0.5);
+}
+
+.cancel-text-button {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.cancel-text-button:hover {
+  color: #333;
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 480px) {
+  .form-box {
+    width: 90%;
+    padding: 1.2rem;
+  }
+}

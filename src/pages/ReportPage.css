@@ -1,0 +1,118 @@
+.report-page {
+  padding: 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, #fff9ff 0%, #f8f3ff 100%);
+  min-height: 100vh;
+}
+
+/* 상단 요약 영역 */
+.summary-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.2rem 2rem;
+  box-shadow: 0 4px 10px rgba(165, 125, 255, 0.1);
+  min-width: 180px;
+  text-align: center;
+}
+
+.summary-card h3 {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.summary-card p {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #a57dff;
+}
+
+/* 차트 영역 */
+.charts-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 2rem;
+}
+
+.chart-box {
+  flex: 1 1 360px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(170, 130, 255, 0.12);
+  padding: 1rem;
+}
+
+/* 감정 인사이트 카드 영역 */
+.insight-section {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 800px;
+}
+
+.insight-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  width: 150px;
+  box-shadow: 0 4px 10px rgba(170, 130, 255, 0.1);
+}
+
+.insight-card h4 {
+  margin: 0;
+  color: #555;
+  font-size: 1rem;
+}
+
+.insight-card p {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: #a57dff;
+  font-weight: 600;
+}
+
+/* 감정별 색상 포인트 */
+.insight-card.happy p {
+  color: #f8b84e;
+}
+.insight-card.calm p {
+  color: #64d6a2;
+}
+.insight-card.sad p {
+  color: #7ca9f8;
+}
+.insight-card.reminiscence p {
+  color: #b68cf2;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .report-page {
+    padding: 1.5rem;
+  }
+  .summary-section {
+    flex-direction: column;
+    align-items: center;
+  }
+  .charts-section {
+    flex-direction: column;
+    align-items: center;
+  }
+}

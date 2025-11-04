@@ -1,0 +1,23 @@
+.report {
+  padding: 2rem;
+  text-align: center;
+}
+
+h2 {
+  color: #444;
+  margin-bottom: 1.5rem;
+}
+
+.charts {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+canvas {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(200, 150, 255, 0.15);
+  padding: 1rem;
+}

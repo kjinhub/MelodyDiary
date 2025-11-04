@@ -1,48 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
+import DiaryDetailModal from "./DiaryDetailModal";
+import "./DiaryCard.css";
 
 export default function DiaryCard({ diary }) {
-  if (!diary) return null;
-
-  const safeText =
-    typeof diary.text === "string"
-      ? diary.text
-      : JSON.stringify(diary.text || "");
-  const safeEmotion =
-    typeof diary.emotion === "string"
-      ? diary.emotion
-      : JSON.stringify(diary.emotion || "감정 분석 실패");
-
-  const track = diary.song || {};
-  const safeTitle =
-    typeof track.title === "string" ? track.title : "(제목 없음)";
-  const safeArtist =
-    typeof track.artist === "string" ? track.artist : "(아티스트 미상)";
-  const embedUrl = typeof track.embedUrl === "string" ? track.embedUrl : null;
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <span>{diary.date}</span>
-        <span className="emotion-tag">{safeEmotion}</span>
+    <>
+      <div className="diary-card" onClick={() => setOpen(true)}>
+        {/* 사진 영역 */}
+        {diary.image && (
+          <div className="card-image">
+            <img src={diary.image} alt="diary" />
+          </div>
+        )}
+
+        {/* 내용 영역 */}
+        <div className="card-content">
+          {/* 감정 태그 */}
+          <span className={`emotion-tag emotion-${diary.emotion}`}>
+            {diary.emotion}
+          </span>
+
+          {/* 날짜 */}
+          <p className="card-date">{diary.date}</p>
+
+          {/* 내용 미리보기 */}
+          <p className="card-text">
+            {diary.text.length > 80
+              ? diary.text.slice(0, 80) + "..."
+              : diary.text}
+          </p>
+
+          {/* 음악 정보 */}
+          {diary.song && (
+            <div className="song-box">
+              <p className="song-title">
+                🎵 {diary.song.title} — {diary.song.artist}
+              </p>
+              <button
+                className={`song-button emotion-${diary.emotion}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(diary.song.embedUrl, "_blank");
+                }}>
+                {diary.emotion}의 음악 ▶
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
-      <p>{safeText}</p>
-
-      {embedUrl && (
-        <>
-          <p style={{ fontSize: "0.9em", color: "#555" }}>
-            🎧 {safeTitle} — {safeArtist}
-          </p>
-          <iframe
-            title={`${safeTitle}-${safeArtist}`}
-            src={embedUrl}
-            width="100%"
-            height="80"
-            frameBorder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          />
-        </>
+      {/* 상세보기 모달 */}
+      {open && (
+        <DiaryDetailModal diary={diary} onClose={() => setOpen(false)} />
       )}
-    </div>
+    </>
   );
 }

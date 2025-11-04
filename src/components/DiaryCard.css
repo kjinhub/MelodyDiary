@@ -1,0 +1,157 @@
+/* ===== Diary Card ===== */
+.diary-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+}
+
+.diary-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== 이미지 섹션 ===== */
+.card-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== 카드 본문 ===== */
+.card-content {
+  padding: 1rem 1.2rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  position: relative;
+}
+
+/* ===== 감정 태그 ===== */
+.emotion-tag {
+  position: absolute;
+  top: -12px;
+  right: 12px;
+  background: #ccc;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.4rem 0.8rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 감정별 색상 매핑 */
+.emotion-행복 {
+  background: #fcbf49;
+}
+.emotion-슬픔 {
+  background: #6c757d;
+}
+.emotion-평온함 {
+  background: #70c1b3;
+}
+.emotion-우울 {
+  background: #b2bec3;
+}
+.emotion-불안 {
+  background: #e67e22;
+}
+.emotion-최상 {
+  background: #9b51e0;
+}
+
+/* ===== 텍스트 ===== */
+.card-date {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.5;
+  word-break: keep-all;
+  white-space: pre-line;
+}
+
+/* ===== 노래 정보 섹션 ===== */
+.song-box {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  margin-top: 0.8rem;
+  text-align: center;
+}
+
+.song-title {
+  font-size: 0.85rem;
+  color: #444;
+  margin-bottom: 0.4rem;
+}
+
+.song-button {
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.song-button:hover {
+  opacity: 0.9;
+}
+
+/* 감정별 버튼 색상 */
+.song-button.emotion-행복 {
+  background: #fcbf49;
+}
+.song-button.emotion-슬픔 {
+  background: #6c757d;
+}
+.song-button.emotion-평온함 {
+  background: #70c1b3;
+}
+.song-button.emotion-우울 {
+  background: #b2bec3;
+}
+.song-button.emotion-불안 {
+  background: #e67e22;
+}
+.song-button.emotion-최상 {
+  background: #9b51e0;
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 1024px) {
+  .diary-list {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .diary-list {
+    grid-template-columns: 1fr;
+  }
+
+  .diary-card {
+    max-width: 100%;
+  }
+}

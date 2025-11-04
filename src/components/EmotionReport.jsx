@@ -1,4 +1,5 @@
 import React from "react";
+import "./EmotionReport.css";
 import {
   Chart,
   ArcElement,

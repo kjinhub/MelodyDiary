@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./Navbar.css";
 export default function Navbar({ onNavigate, onNewDiary }) {
   return (
     <nav className="navbar">
