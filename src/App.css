@@ -7,7 +7,6 @@ body {
 }
 
 .app-container {
-  display: block; /* flex 제거 */
   min-height: 100vh;
 }
 

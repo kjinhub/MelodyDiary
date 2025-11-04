@@ -6,10 +6,11 @@
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  width: 100%;
+  width: 320px; /* 카드 기본 폭 */
   max-width: 340px;
   display: flex;
   flex-direction: column;
+  margin-top: 30px;
 }
 
 .diary-card:hover {
@@ -33,20 +34,23 @@
 
 /* ===== 카드 본문 ===== */
 .card-content {
-  padding: 1rem 1.2rem 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 1rem;
+  padding: 1rem 1.2rem 1.2rem;
   position: relative;
+  margin: 5px;
 }
 
 /* ===== 감정 태그 ===== */
+/* ===== 감정 태그 공통 스타일 ===== */
 .emotion-tag {
+  margin-top: 30px;
   position: absolute;
   top: -12px;
   right: 12px;
-  background: #ccc;
-  color: #fff;
+  background: #ccc; /* 기본 회색 */
+  color: #363636;
   font-size: 0.8rem;
   font-weight: 600;
   border-radius: 999px;
@@ -54,24 +58,30 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 감정별 색상 매핑 */
-.emotion-행복 {
+/* ===== 감정별 색상 매핑 (구체화된 선택자) ===== */
+.emotion-tag.emotion-행복 {
   background: #fcbf49;
+  color: #fff;
 }
-.emotion-슬픔 {
+.emotion-tag.emotion-슬픔 {
   background: #6c757d;
+  color: #fff;
 }
-.emotion-평온함 {
+.emotion-tag.emotion-평온함 {
   background: #70c1b3;
+  color: #fff;
 }
-.emotion-우울 {
+.emotion-tag.emotion-우울 {
   background: #b2bec3;
+  color: #fff;
 }
-.emotion-불안 {
+.emotion-tag.emotion-불안 {
   background: #e67e22;
+  color: #fff;
 }
-.emotion-최상 {
+.emotion-tag.emotion-최상 {
   background: #9b51e0;
+  color: #fff;
 }
 
 /* ===== 텍스트 ===== */
@@ -120,7 +130,7 @@
 
 /* 감정별 버튼 색상 */
 .song-button.emotion-행복 {
-  background: #fcbf49;
+  background: #ffaa00;
 }
 .song-button.emotion-슬픔 {
   background: #6c757d;
@@ -137,21 +147,19 @@
 .song-button.emotion-최상 {
   background: #9b51e0;
 }
-
-/* ===== 반응형 ===== */
-@media (max-width: 1024px) {
-  .diary-list {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
+.delete-button {
+  margin-top: 0.8rem;
+  background: #b9b9b9;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-@media (max-width: 600px) {
-  .diary-list {
-    grid-template-columns: 1fr;
-  }
-
-  .diary-card {
-    max-width: 100%;
-  }
+.delete-button:hover {
+  background: #ff8a94;
 }

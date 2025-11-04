@@ -1,19 +1,34 @@
-/* ===== DiaryList Layout ===== */
+/* ===== DiaryList Layout: 가로 정렬 버전 ===== */
 .diary-list {
-  all: unset; /* 상위 flex 속성 완전 초기화 */
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
-  justify-items: center;
+  display: flex; /* 가로 배치 */
+  flex-wrap: wrap; /* 공간이 부족하면 줄바꿈 */
+  justify-content: center; /* 중앙 정렬 */
+  align-items: flex-start; /* 카드 위쪽 맞춤 */
+  gap: 1rem; /* 카드 간격 */
+  margin: 20px 0;
   padding: 2.5rem 2rem;
   min-height: 100vh;
   background: linear-gradient(to bottom right, #fff9ff, #f7f3ff);
   box-sizing: border-box;
+  row-gap: 0.1rem; /* ⬅ 줄바꿈 간격은 여기서 결정 */
 }
 
+/* 카드가 없는 경우 문구 중앙 배치 */
 .empty {
   text-align: center;
   color: #888;
   font-size: 1rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
+}
+
+/* 반응형 - 모바일에서는 세로 배치 */
+@media (max-width: 600px) {
+  .diary-list {
+    flex-direction: column;
+    align-items: center;
+  }
+  .diary-card {
+    width: 90%;
+    max-width: 400px;
+  }
 }

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import DiaryDetailModal from "./DiaryDetailModal";
 import "./DiaryCard.css";
 
-export default function DiaryCard({ diary }) {
+export default function DiaryCard({ diary, onDelete }) {
   const [open, setOpen] = useState(false);
+  console.log(`Emotion: "${diary.emotion}"`);
 
   return (
     <>
@@ -48,6 +49,15 @@ export default function DiaryCard({ diary }) {
               </button>
             </div>
           )}
+          {/* ✅ 삭제 버튼 추가 */}
+          <button
+            className="delete-button"
+            onClick={(e) => {
+              e.stopPropagation(); // 카드 클릭 방지
+              onDelete(); // 상위로 전달
+            }}>
+            삭제 🗑️
+          </button>
         </div>
       </div>
 
