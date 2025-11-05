@@ -211,7 +211,6 @@ export default function DiaryForm({ onClose }) {
                 src={previewTrack.embedUrl}
                 width="100%"
                 height="80"
-                frameBorder="0"
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               />
             </div>

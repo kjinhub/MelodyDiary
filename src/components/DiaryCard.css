@@ -99,54 +99,68 @@
 }
 
 /* ===== 노래 정보 섹션 ===== */
+/* ===== 노래 정보 섹션 (Spotify 느낌) ===== */
 .song-box {
-  background: #f8f9fa;
-  border-radius: 10px;
-  padding: 0.6rem 0.8rem;
+  background: linear-gradient(135deg, #4ae27f, #1ca850);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
   margin-top: 0.8rem;
   text-align: center;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(3, 233, 83, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.song-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(29, 185, 84, 0.45);
 }
 
 .song-title {
-  font-size: 0.85rem;
-  color: #444;
-  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
 }
 
+/* 🎧 아이콘처럼 보이는 음표 추가 */
+.song-title::before {
+  content: "🎧";
+  font-size: 1rem;
+}
+
+/* ===== 음악 재생 버튼 ===== */
 .song-button {
   border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  color: white;
-  font-weight: 600;
+  border-radius: 999px; /* Spotify 스타일 둥근 버튼 */
+  padding: 0.6rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #26b357;
+  background: #ffffff;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.song-button::after {
+  content: "▶️";
+  font-size: 1rem;
 }
 
 .song-button:hover {
-  opacity: 0.9;
+  background: #1ed760;
+  color: #fff;
+  transform: scale(1.05);
 }
 
-/* 감정별 버튼 색상 */
-.song-button.emotion-행복 {
-  background: #ffaa00;
-}
-.song-button.emotion-슬픔 {
-  background: #6c757d;
-}
-.song-button.emotion-평온함 {
-  background: #70c1b3;
-}
-.song-button.emotion-우울 {
-  background: #b2bec3;
-}
-.song-button.emotion-불안 {
-  background: #e67e22;
-}
-.song-button.emotion-최상 {
-  background: #9b51e0;
-}
 .delete-button {
   margin-top: 0.8rem;
   background: #b9b9b9;

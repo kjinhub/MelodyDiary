@@ -1,0 +1,23 @@
+/* ===== 닫기 버튼 ===== */
+/* ===== 하단 닫기 버튼 ===== */
+.bottom-close-button {
+  margin-top: 1rem;
+  background: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.bottom-close-button:hover {
+  background: #495057;
+  transform: translateY(-2px);
+}
+
+.close-button:active {
+  transform: translateY(0);
+}

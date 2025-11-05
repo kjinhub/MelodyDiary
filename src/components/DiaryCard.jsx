@@ -45,7 +45,7 @@ export default function DiaryCard({ diary, onDelete }) {
                   e.stopPropagation();
                   window.open(diary.song.embedUrl, "_blank");
                 }}>
-                {diary.emotion}의 음악 ▶
+                음악 재생
               </button>
             </div>
           )}

@@ -1,4 +1,5 @@
 import React from "react";
+import "./DiaryDetailModal.css";
 export default function DiaryDetailModal({ diary, onClose }) {
   return (
     <div className="overlay" onClick={onClose}>
@@ -27,7 +28,9 @@ export default function DiaryDetailModal({ diary, onClose }) {
             />
           </>
         )}
-        <button onClick={onClose}>닫기</button>
+        <button className="bottom-close-button" onClick={onClose}>
+          닫기
+        </button>
       </div>
     </div>
   );
