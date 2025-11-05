@@ -129,7 +129,6 @@
 
 /* 🎧 아이콘처럼 보이는 음표 추가 */
 .song-title::before {
-  content: "🎧";
   font-size: 1rem;
 }
 
