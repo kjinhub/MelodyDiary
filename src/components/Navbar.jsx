@@ -1,13 +1,24 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
-export default function Navbar({ onNavigate, onNewDiary }) {
+
+export default function Navbar({ onNewDiary }) {
+  const navigate = useNavigate();
+
   return (
     <nav className="navbar">
-      <div className="logo">🎶 MelodyDiary</div>
-      <div className="nav-links">
-        <button onClick={() => onNavigate("diary")}>나의 일기</button>
-        <button onClick={() => onNavigate("report")}>감정 리포트</button>
+      {/* 로고 */}
+      <div className="logo" onClick={() => navigate("/")}>
+        🎶 MelodyDiary
       </div>
+
+      {/* 네비게이션 버튼 영역 */}
+      <div className="nav-links">
+        <button onClick={() => navigate("/")}>나의 일기</button>
+        <button onClick={() => navigate("/report")}>감정 리포트</button>
+      </div>
+
+      {/* 새 일기 작성 버튼 */}
       <button className="new-btn" onClick={onNewDiary}>
         + 새 일기
       </button>

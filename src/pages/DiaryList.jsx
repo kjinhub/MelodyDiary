@@ -3,11 +3,10 @@ import DiaryCard from "../components/DiaryCard";
 import "./DiaryList.css";
 export default function DiaryList() {
   const [diaries, setDiaries] = useState([]);
-  // ✅ 삭제 함수 추가
   const handleDelete = (index) => {
     const updated = diaries.filter((_, i) => i !== index);
     setDiaries(updated);
-    localStorage.setItem("diaries", JSON.stringify(updated)); // 로컬스토리지 반영
+    localStorage.setItem("diaries", JSON.stringify(updated));
   };
   useEffect(() => {
     try {

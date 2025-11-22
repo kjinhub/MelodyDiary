@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./DiaryForm.css";
 
-// 실제 API 함수 import
 import analyzeEmotion from "../utils/gptEmotion"; // 감정 분석 (GPT)
 import {
   getSpotifyToken,
@@ -10,43 +9,66 @@ import {
 } from "../utils/spotify"; // Spotify 관련 함수
 
 export default function DiaryForm({ onClose }) {
+  // 사용자가 텍스트 영역에 작성하는 일기 내용 상태
   const [text, setText] = useState("");
+
+  // 업로드된 이미지 파일의 Data URL (미리보기 및 저장용)
   const [image, setImage] = useState(null);
+
+  // GPT로부터 추천받은 노래 목록 (title, artist 배열)
   const [songs, setSongs] = useState([]);
+
+  // 사용자가 songs 목록 중에서 최종적으로 선택한 노래 객체
   const [selectedSong, setSelectedSong] = useState(null);
+
+  // Spotify API를 통해 가져온 최종 미리듣기 정보 (embedUrl, title, artist, albumCover 포함)
   const [previewTrack, setPreviewTrack] = useState(null);
+
+  // 데이터 요청(GPT, Spotify) 및 저장 시 로딩 상태 관리 (버튼 비활성화 및 UI 표시용)
   const [loading, setLoading] = useState(false);
+
+  // '다른 곡 추천받기' 버튼 클릭 횟수 (GPT에게 다른 추천을 요청하기 위해 사용됨)
   const [retryCount, setRetryCount] = useState(0);
+
+  // 드래그 앤 드롭 영역의 활성화 상태 (UI 피드백용)
   const [dragActive, setDragActive] = useState(false);
+
+  // 숨겨진 파일 입력(input type="file") 요소에 접근하기 위한 참조
   const fileInputRef = useRef(null);
 
-  // 파일 읽기
+  // 파일
   const handleFileRead = (file) => {
     const reader = new FileReader();
     reader.onload = () => setImage(reader.result);
     reader.readAsDataURL(file);
   };
 
-  // 파일 선택
   const handleFile = (e) => {
     const file = e.target.files[0];
-    if (file) handleFileRead(file);
+    if (file) {
+      handleFileRead(file);
+    }
   };
 
-  // 드래그 앤 드롭
   const handleDragOver = (e) => {
     e.preventDefault();
     setDragActive(true);
   };
+
   const handleDragLeave = (e) => {
     e.preventDefault();
     setDragActive(false);
   };
+
   const handleDrop = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // 이걸 안하면 새 탭에서 사진을 열어버림
     setDragActive(false);
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith("image/")) handleFileRead(file);
+    const file = e.dataTransfer.files[0]; //dataTransfer 여기에는 사용자가 드롭한 파일들이 들어있음
+    // 따라서 file배열의 첫번째 값만 가져오라는뜻
+    if (file && file.type.startsWith("image/")) {
+      // 이미지 파일의 경우 타입이 image로 시작함
+      handleFileRead(file);
+    }
   };
 
   // GPT 노래 추천 요청
@@ -55,6 +77,8 @@ export default function DiaryForm({ onClose }) {
     setLoading(true);
     try {
       const songList = await getSongRecommendations(text, retryCount);
+      console.log(songList);
+
       setSongs(songList);
       setSelectedSong(null);
       setPreviewTrack(null);
@@ -79,6 +103,7 @@ export default function DiaryForm({ onClose }) {
       setPreviewTrack(null);
       const token = await getSpotifyToken();
       const track = await searchTrack(song, token);
+      console.log("Spotify 검색 결과 (searchTrack 반환 값):", track);
       if (track?.embedUrl) setPreviewTrack(track);
     } catch (err) {
       console.error("미리듣기 오류:", err);
@@ -124,10 +149,10 @@ export default function DiaryForm({ onClose }) {
         {/* 상단 헤더 */}
         <div className="header-container">
           <h2 className="modal-title">
-            <span className="icon-sparkle">✨</span> 새로운 일기 작성
+            <span className="icon-sparkle"></span> 새로운 일기 작성
           </h2>
           <button className="close-button" onClick={onClose}>
-            &times;
+            x{" "}
           </button>
         </div>
 

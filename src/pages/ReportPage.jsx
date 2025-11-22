@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import EmotionReport from "../components/EmotionReport";
 import "./ReportPage.css";
 
@@ -11,21 +11,26 @@ export default function ReportPage() {
   }, []);
 
   const total = diaries.length;
-  const emotionCounts = diaries.reduce((acc, d) => {
-    acc[d.emotion] = (acc[d.emotion] || 0) + 1;
-    return acc;
-  }, {});
 
-  const mostEmotion =
-    total > 0
-      ? Object.entries(emotionCounts).sort((a, b) => b[1] - a[1])[0][0]
-      : "없음";
+  // 감정 비율 계산
+  const emotionCounts = useMemo(() => {
+    return diaries.reduce((acc, d) => {
+      acc[d.emotion] = (acc[d.emotion] || 0) + 1;
+      return acc;
+    }, {});
+  }, [diaries]);
 
-  const totalSongs = total * 3; // 임의 기준 (한 일기당 3곡 추천된다고 가정)
+  // 가장 많은 감정 계산
+  const mostEmotion = useMemo(() => {
+    const entries = Object.entries(emotionCounts);
+    if (entries.length === 0) return "없음";
+    return entries.sort((a, b) => b[1] - a[1])[0][0];
+  }, [emotionCounts]);
+
+  const totalSongs = useMemo(() => total * 3, [total]);
 
   return (
     <div className="report-page">
-      {/* 상단 요약 카드 */}
       <div className="summary-section">
         <div className="summary-card">
           <h3>전체 일기</h3>
@@ -41,14 +46,12 @@ export default function ReportPage() {
         </div>
       </div>
 
-      {/* 감정 분포 및 활동 차트 */}
       <div className="charts-section">
         <div className="chart-box">
           <EmotionReport diaries={diaries} />
         </div>
       </div>
 
-      {/* 감정 인사이트 */}
       <div className="insight-section">
         {Object.entries(emotionCounts).map(([emotion, count]) => (
           <div key={emotion} className={`insight-card ${emotion}`}>

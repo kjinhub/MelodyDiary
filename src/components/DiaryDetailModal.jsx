@@ -1,6 +1,8 @@
 import React from "react";
 import "./DiaryDetailModal.css";
 export default function DiaryDetailModal({ diary, onClose }) {
+  console.log(diary);
+
   return (
     <div className="overlay" onClick={onClose}>
       <div className="form-box" onClick={(e) => e.stopPropagation()}>
