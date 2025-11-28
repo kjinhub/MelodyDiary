@@ -30,32 +30,16 @@ function getWeekKey(dateStr) {
   return `${year}-W${week}`; // 예: "2025-W45"
 }
 export default function EmotionReport({ diaries, emotionCounts }) {
-  // ① 상위에서 받은 emotionCounts 사용 (없을 경우 대비)
-  // const counts =
-  //   emotionCounts ||
-  //   diaries.reduce((acc, d) => {
-  //     acc[d.emotion] = (acc[d.emotion] || 0) + 1;
-  //     return acc;
-  //   }, {});
-
   const pieLabels = Object.keys(emotionCounts);
   const pieValues = Object.values(emotionCounts);
-
-  const pieData = {
-    labels: pieLabels,
-    datasets: [
-      {
-        data: pieValues,
-        backgroundColor: [
-          "#FFB6C1",
-          "#C9A0DC",
-          "#9FE2BF",
-          "#FFD580",
-          "#B0E0E6",
-          "#A57DFF",
-        ],
-      },
-    ],
+  const emotionColors = {
+    행복: "#FFD580",
+    슬픔: "#A57DFF",
+    회상: "#9FE2BF",
+    사랑: "#FFB6C1",
+    평온: "#B0E0E6",
+    불안: "#C9A0DC",
+    분노: "#FF7F50",
   };
 
   // ② 주간 감정 변화 부분 (그대로)
@@ -69,21 +53,27 @@ export default function EmotionReport({ diaries, emotionCounts }) {
   const emotions = [...new Set(diaries.map((d) => d.emotion))];
   const weeks = Object.keys(weeklyData).sort();
 
-  const datasets = emotions.map((emotion, i) => ({
+  const datasets = emotions.map((emotion) => ({
     label: emotion,
     data: weeks.map((w) => weeklyData[w][emotion] || 0),
-    backgroundColor: [
-      "#FFB6C1",
-      "#C9A0DC",
-      "#9FE2BF",
-      "#FFD580",
-      "#B0E0E6",
-      "#A57DFF",
-    ][i % 6],
+    backgroundColor: emotionColors[emotion] || "#CCCCCC", // fallback
   }));
 
   const barData = { labels: weeks, datasets };
+  // pieLabels: ["행복", "슬픔", "분노", ...]
+  const pieBackgroundColors = pieLabels.map(
+    (emotion) => emotionColors[emotion] || "#CCCCCC" // fallback: 회색
+  );
 
+  const pieData = {
+    labels: pieLabels,
+    datasets: [
+      {
+        data: pieValues,
+        backgroundColor: pieBackgroundColors,
+      },
+    ],
+  };
   return (
     <div className="report">
       <h2>감정 리포트</h2>
