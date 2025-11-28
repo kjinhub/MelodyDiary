@@ -29,13 +29,15 @@ function getWeekKey(dateStr) {
   const week = Math.ceil((dayOfYear + firstDay.getDay() + 1) / 7);
   return `${year}-W${week}`; // 예: "2025-W45"
 }
+export default function EmotionReport({ diaries, emotionCounts }) {
+  // ① 상위에서 받은 emotionCounts 사용 (없을 경우 대비)
+  // const counts =
+  //   emotionCounts ||
+  //   diaries.reduce((acc, d) => {
+  //     acc[d.emotion] = (acc[d.emotion] || 0) + 1;
+  //     return acc;
+  //   }, {});
 
-export default function EmotionReport({ diaries }) {
-  // ----- ① 전체 감정 비율 (Pie) -----
-  const emotionCounts = diaries.reduce((acc, d) => {
-    acc[d.emotion] = (acc[d.emotion] || 0) + 1;
-    return acc;
-  }, {});
   const pieLabels = Object.keys(emotionCounts);
   const pieValues = Object.values(emotionCounts);
 
@@ -56,7 +58,7 @@ export default function EmotionReport({ diaries }) {
     ],
   };
 
-  // ----- ② 주간 감정 변화 (Bar) -----
+  // ② 주간 감정 변화 부분 (그대로)
   const weeklyData = {};
   diaries.forEach((d) => {
     const weekKey = getWeekKey(d.date);
@@ -85,16 +87,12 @@ export default function EmotionReport({ diaries }) {
   return (
     <div className="report">
       <h2>감정 리포트</h2>
-
-      {/* 위쪽: 원형 그래프 */}
       <div className="chart-section">
         <h3>전체 감정 비율</h3>
         <div className="chart-box">
           <Pie data={pieData} />
         </div>
       </div>
-
-      {/* 아래쪽: 주간 막대 그래프 */}
       <div className="chart-section">
         <h3>주간 감정 변화</h3>
         <div className="chart-box">

@@ -58,7 +58,7 @@ export default function ReportPage() {
     setShowDetails((prev) => !prev);
   };
 
-  // 🌟 [추가된 함수] 앨범 클릭 시 Spotify로 이동
+  // 앨범 클릭 시 Spotify로 이동
   const handleTrackClick = (url) => {
     if (url) {
       // 새 탭에서 Spotify 링크 열기
@@ -68,21 +68,21 @@ export default function ReportPage() {
 
   return (
     <div className="report-page">
-      {/* 🌟 최근 음악 썸네일 갤러리 */}
+      {/*  최근 음악 썸네일 갤러리 */}
       {recentTracks.length > 0 && (
         <div className="recent-tracks-gallery">
           <h3>최근 기록한 음악 🎧</h3>
           <div className="track-thumbnails">
             {recentTracks.map((track, index) => (
-              // 🌟 클릭 가능한 track-item (Spotify로 이동)
+              // 클릭 가능한 track-item (Spotify로 이동)
               <div
                 key={index}
                 className="track-item"
                 title={`${track.title} - ${track.artist}`}
-                onClick={() => handleTrackClick(track.embedUrl)} // 🌟 클릭 이벤트 핸들러 연결
+                onClick={() => handleTrackClick(track.embedUrl)} // 클릭 이벤트 핸들러 연결
               >
                 <img src={track.albumCover} alt={track.title} />
-                {/* 🌟 노래 제목 및 아티스트 표시 영역 */}
+                {/* 노래 제목 및 아티스트 표시 영역 */}
                 <div className="track-info">
                   <p className="track-title-text">{track.title}</p>
                   <p className="track-artist-text">{track.artist} (듣기)</p>
@@ -93,7 +93,7 @@ export default function ReportPage() {
         </div>
       )}
 
-      {/* 🌟 상세 보기 토글 버튼 */}
+      {/* 상세 보기 토글 버튼 */}
       <div style={{ textAlign: "center", margin: "20px 0" }}>
         <button onClick={handleToggleDetails} className="toggle-button">
           {showDetails ? "요약 보기 ⬆️" : "상세 통계 및 차트 보기 ⬇️"}
@@ -121,7 +121,7 @@ export default function ReportPage() {
         <>
           <div className="charts-section">
             <div className="chart-box">
-              <EmotionReport diaries={diaries} />
+              <EmotionReport diaries={diaries} emotionCounts={emotionCounts} />
             </div>
           </div>
 
