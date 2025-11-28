@@ -3,6 +3,7 @@ import DiaryCard from "../components/DiaryCard";
 import "./DiaryList.css";
 export default function DiaryList() {
   const [diaries, setDiaries] = useState([]);
+  console.log("DiaryList rendered : ", diaries);
   const handleDelete = (index) => {
     const updated = diaries.filter((_, i) => i !== index);
     setDiaries(updated);

@@ -4,7 +4,6 @@ import "./DiaryCard.css";
 
 export default function DiaryCard({ diary, onDelete }) {
   const [open, setOpen] = useState(false);
-  console.log(`Emotion: "${diary.emotion}"`);
 
   return (
     <>
