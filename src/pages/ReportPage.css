@@ -1,3 +1,6 @@
+/* ------------------------------ */
+/*            전체 페이지         */
+/* ------------------------------ */
 .report-page {
   padding: 2rem 3rem;
   display: flex;
@@ -6,8 +9,114 @@
   background: linear-gradient(180deg, #fff9ff 0%, #f8f3ff 100%);
   min-height: 100vh;
 }
+/* --- 최근 음악 앨범 크기 확대 --- */
+.track-item {
+  width: 150px; /* 기존 110px → 증가 */
+  height: 150px; /* 기존 110px → 증가 */
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s ease;
+}
 
-/* 상단 요약 영역 */
+.track-item:hover {
+  transform: scale(1.07);
+}
+
+.track-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 🔥 오버레이(노래 제목/아티스트) 확대 */
+.track-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 8px 10px; /* 패딩 증가 */
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  color: white;
+  text-align: center;
+}
+
+/* 제목 텍스트 크기 증가 */
+.track-title-text {
+  margin: 0;
+  font-size: 0.9rem; /* 기존 0.7rem → 확대 */
+  font-weight: 600;
+}
+
+/* 아티스트 텍스트 크기 증가 */
+.track-artist-text {
+  margin: 2px 0 0;
+  font-size: 0.8rem; /* 기존 0.65rem → 확대 */
+  opacity: 0.9;
+}
+.track-thumbnails {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+
+  overflow-x: auto; /* 가로 스크롤 허용 */
+  overflow-y: hidden;
+  padding-bottom: 10px;
+
+  flex-wrap: nowrap; /* 줄바꿈 금지 → 가로 유지 */
+}
+
+.track-thumbnails::-webkit-scrollbar {
+  height: 6px;
+}
+
+.track-thumbnails::-webkit-scrollbar-thumb {
+  background: #c9b4ff;
+  border-radius: 10px;
+}
+
+/* --- 모바일 반응형: 최소 120px 유지 --- */
+@media (max-width: 768px) {
+  .track-item {
+    width: 120px;
+    height: 120px;
+  }
+
+  .track-title-text {
+    font-size: 0.85rem;
+  }
+
+  .track-artist-text {
+    font-size: 0.75rem;
+  }
+}
+
+/* ------------------------------ */
+/*          상세 보기 버튼        */
+/* ------------------------------ */
+.toggle-button {
+  background-color: #a57dff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 10px rgba(165, 125, 255, 0.4);
+}
+
+.toggle-button:hover {
+  background-color: #8c5ff2;
+  box-shadow: 0 6px 12px rgba(165, 125, 255, 0.6);
+}
+
+/* ------------------------------ */
+/*            요약 카드           */
+/* ------------------------------ */
 .summary-section {
   display: flex;
   flex-wrap: wrap;
@@ -20,9 +129,9 @@
   background: #ffffff;
   border-radius: 12px;
   padding: 1.2rem 2rem;
-  box-shadow: 0 4px 10px rgba(165, 125, 255, 0.1);
   min-width: 180px;
   text-align: center;
+  box-shadow: 0 4px 10px rgba(165, 125, 255, 0.1);
 }
 
 .summary-card h3 {
@@ -37,7 +146,9 @@
   color: #a57dff;
 }
 
-/* 차트 영역 */
+/* ------------------------------ */
+/*            차트 영역           */
+/* ------------------------------ */
 .charts-section {
   display: flex;
   flex-wrap: wrap;
@@ -52,11 +163,13 @@
   flex: 1 1 360px;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(170, 130, 255, 0.12);
   padding: 1rem;
+  box-shadow: 0 4px 10px rgba(170, 130, 255, 0.12);
 }
 
-/* 감정 인사이트 카드 영역 */
+/* ------------------------------ */
+/*       감정 인사이트 카드       */
+/* ------------------------------ */
 .insight-section {
   display: flex;
   justify-content: center;
@@ -84,35 +197,55 @@
 .insight-card p {
   margin-top: 0.4rem;
   font-size: 0.9rem;
-  color: #a57dff;
   font-weight: 600;
+  color: #a57dff;
 }
 
-/* 감정별 색상 포인트 */
+/* 감정별 색상 */
 .insight-card.happy p {
   color: #f8b84e;
 }
+
 .insight-card.calm p {
   color: #64d6a2;
 }
+
 .insight-card.sad p {
   color: #7ca9f8;
 }
+
 .insight-card.reminiscence p {
   color: #b68cf2;
 }
 
-/* 반응형 */
+/* ------------------------------ */
+/*            반응형              */
+/* ------------------------------ */
 @media (max-width: 768px) {
   .report-page {
     padding: 1.5rem;
   }
+
+  .track-thumbnails {
+    gap: 15px;
+  }
+
+  .track-item {
+    width: 90px;
+    height: 90px;
+  }
+
   .summary-section {
     flex-direction: column;
     align-items: center;
   }
+
   .charts-section {
     flex-direction: column;
     align-items: center;
+  }
+
+  .recent-tracks-gallery {
+    max-width: 100%;
   }
 }

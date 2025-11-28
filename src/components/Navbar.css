@@ -10,13 +10,15 @@
 }
 
 .logo {
-  /* 로고 스타일 유지 */
   font-weight: 600;
   font-size: 1.3rem;
   color: #a57dff;
-  /* Link 컴포넌트에도 커서 포인터 추가 (클릭 가능한 요소임을 명확히) */
   cursor: pointer;
+
+  /* 🌟 추가: 밑줄 제거 */
+  text-decoration: none;
 }
+/* ... 나머지 CSS 코드 ... */
 
 /* ⚠️ 수정 필요: nav-links 내부의 <button>이 <a> (Link)로 변경되었으므로 선택자를 수정합니다. */
 .nav-links a {
