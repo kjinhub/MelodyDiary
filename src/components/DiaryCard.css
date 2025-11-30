@@ -176,3 +176,32 @@
 .delete-button:hover {
   background: #ff8a94;
 }
+/* ===== 찜하기 버튼 ===== */
+.favorite-button {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  background: #ffdfdf;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px; /* pill */
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+/* 하트 아이콘 느낌 */
+.favorite-button::before {
+  font-size: 0.9rem;
+}
+
+.favorite-button:hover {
+  background: #d40000;
+  transform: scale(1.06);
+  color: #000000;
+}
