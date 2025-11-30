@@ -2,11 +2,13 @@ import React from "react";
 import DiaryCard from "../components/DiaryCard";
 import "./DiaryList.css";
 
-function DiaryList({ diaries, setDiaries }) {
-  const handleDelete = (index) => {
-    const updated = diaries.filter((_, i) => i !== index);
-    setDiaries(updated); // App의 diaries 상태 변경
-  };
+export default function DiaryList({ diaries, onDelete }) {
+  console.log("📄 [DiaryList] Rendered, diary count:", diaries.length);
+
+  if (!Array.isArray(diaries)) {
+    console.error("❌ [DiaryList] Invalid diary data format:", diaries);
+    return <p>데이터 오류 발생</p>;
+  }
 
   return (
     <div className="diary-list">
@@ -16,16 +18,20 @@ function DiaryList({ diaries, setDiaries }) {
         diaries
           .slice()
           .reverse()
-          .map((diary, index) => (
+          .map((d, i) => (
             <DiaryCard
-              key={index}
-              diary={diary}
-              onDelete={() => handleDelete(index)}
+              key={i}
+              diary={d}
+              onDelete={() => {
+                console.log(
+                  "🗑️ [DiaryList] Delete clicked for diary index:",
+                  i
+                );
+                onDelete(i);
+              }}
             />
           ))
       )}
     </div>
   );
 }
-
-export default React.memo(DiaryList);

@@ -1,104 +1,69 @@
 import React, { useState, useRef } from "react";
 import "./DiaryForm.css";
 
-import analyzeEmotion from "../utils/gptEmotion"; // 감정 분석 (GPT)
+import analyzeEmotion from "../utils/gptEmotion";
 import {
   getSpotifyToken,
   searchTrack,
   getSongRecommendations,
-} from "../utils/spotify"; // Spotify 관련 함수
+} from "../utils/spotify";
 
-export default function DiaryForm({ onClose, setDiaries }) {
+export default function DiaryForm({ onClose, onSave }) {
   const [text, setText] = useState("");
   const [image, setImage] = useState(null);
-
   const [songs, setSongs] = useState([]);
   const [selectedSong, setSelectedSong] = useState(null);
   const [previewTrack, setPreviewTrack] = useState(null);
-
   const [loading, setLoading] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
-
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef(null);
 
-  // 파일 읽기
+  console.log("📂 [DiaryForm] Component rendered");
+
   const handleFileRead = (file) => {
     const reader = new FileReader();
     reader.onload = () => setImage(reader.result);
     reader.readAsDataURL(file);
+    console.log("🖼️ [DiaryForm] Image uploaded:", file.name);
   };
 
-  const handleFile = (e) => {
-    const file = e.target.files[0];
-    if (file) handleFileRead(file);
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    setDragActive(true);
-  };
-
-  const handleDragLeave = (e) => {
-    e.preventDefault();
-    setDragActive(false);
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setDragActive(false);
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith("image/")) {
-      handleFileRead(file);
-    }
-  };
-
-  // GPT 노래 추천
   const handleRecommend = async () => {
     if (!text.trim()) return alert("먼저 일기를 작성하세요.");
     setLoading(true);
-
+    console.log("🎧 [DiaryForm] Requesting song recommendations...");
     try {
       const songList = await getSongRecommendations(text, retryCount);
       setSongs(songList);
       setSelectedSong(null);
       setPreviewTrack(null);
+      console.log("✅ [DiaryForm] Recommended songs received:", songList);
     } catch (err) {
-      console.error("추천 실패:", err);
+      console.error("❌ [DiaryForm] Song recommendation failed:", err);
       alert("노래 추천 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
   };
 
-  // 다른 곡 추천
-  const handleRetry = async () => {
-    setRetryCount((prev) => prev + 1);
-    await handleRecommend();
-  };
-
-  // Spotify 미리듣기 요청
   const handlePreview = async (song) => {
+    console.log("▶️ [DiaryForm] Previewing song:", song);
     try {
       setSelectedSong(song);
       setPreviewTrack(null);
-
       const token = await getSpotifyToken();
       const track = await searchTrack(song, token);
-
       if (track?.embedUrl) setPreviewTrack(track);
+      console.log("🎵 [DiaryForm] Spotify track preview loaded:", track);
     } catch (err) {
-      console.error("미리듣기 오류:", err);
-      alert("Spotify에서 노래를 불러올 수 없습니다.");
+      console.error("❌ [DiaryForm] Preview failed:", err);
     }
   };
 
-  // 🟢 일기 저장 (핵심 수정)
   const handleSave = async () => {
     if (!text || !selectedSong) return alert("일기와 노래를 선택하세요.");
-
     setLoading(true);
-
+    console.log("💾 [DiaryForm] Saving diary...");
     try {
       const emotion = await analyzeEmotion(text);
       const token = await getSpotifyToken();
@@ -112,14 +77,12 @@ export default function DiaryForm({ onClose, setDiaries }) {
         date: new Date().toISOString().slice(0, 10),
       };
 
-      // 🔥 localStorage 직접 수정 제거!!
-      // App.jsx의 diaries 상태에 추가
-      setDiaries((prev) => [...prev, newDiary]);
-
+      onSave(newDiary);
       alert("일기가 저장되었습니다!");
       onClose();
+      console.log("✅ [DiaryForm] Diary saved successfully:", newDiary);
     } catch (err) {
-      console.error("저장 실패:", err);
+      console.error("❌ [DiaryForm] Save failed:", err);
       alert("일기 저장 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
@@ -129,49 +92,50 @@ export default function DiaryForm({ onClose, setDiaries }) {
   return (
     <div className="overlay">
       <div className="form-box">
-        {/* 상단 헤더 */}
         <div className="header-container">
-          <h2 className="modal-title">
-            <span className="icon-sparkle"></span> 새로운 일기 작성
-          </h2>
+          <h2 className="modal-title">새로운 일기 작성</h2>
           <button className="close-button" onClick={onClose}>
             x
           </button>
         </div>
 
-        {/* 사진 업로드 */}
         <section className="photo-section">
-          <h3 className="section-title">오늘의 사진</h3>
-
+          <h3>오늘의 사진</h3>
           <label
             htmlFor="fileInput"
             className={`photo-upload ${dragActive ? "active" : ""}`}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}>
+            onDragOver={(e) => {
+              e.preventDefault();
+              setDragActive(true);
+            }}
+            onDragLeave={(e) => {
+              e.preventDefault();
+              setDragActive(false);
+            }}
+            onDrop={(e) => {
+              e.preventDefault();
+              setDragActive(false);
+              const file = e.dataTransfer.files[0];
+              if (file && file.type.startsWith("image/")) handleFileRead(file);
+            }}>
             {image ? (
               <img src={image} alt="preview" />
             ) : (
-              <div className="photo-placeholder">
-                <span className="photo-icon">📷</span>
-                <div>사진을 업로드하세요</div>
-              </div>
+              <div>📷 사진 업로드</div>
             )}
           </label>
-
           <input
             id="fileInput"
             ref={fileInputRef}
             type="file"
             accept="image/*"
-            onChange={handleFile}
+            onChange={(e) => handleFileRead(e.target.files[0])}
             style={{ display: "none" }}
           />
         </section>
 
-        {/* 일기 내용 */}
         <section className="text-section">
-          <h3 className="section-title">오늘의 이야기</h3>
+          <h3>오늘의 이야기</h3>
           <textarea
             placeholder="오늘 하루는 어땠나요?"
             value={text}
@@ -179,21 +143,19 @@ export default function DiaryForm({ onClose, setDiaries }) {
           />
         </section>
 
-        {/* 노래 추천 */}
         <section className="song-section">
           <div className="form-actions recommend-actions">
-            <button
-              onClick={handleRecommend}
-              disabled={loading}
-              className="secondary-button">
+            <button onClick={handleRecommend} disabled={loading}>
               {loading ? "추천 중..." : "🎧 곡 추천 받기"}
             </button>
-
             {songs.length > 0 && (
               <button
-                onClick={handleRetry}
-                disabled={loading}
-                className="secondary-button">
+                onClick={() => {
+                  setRetryCount((r) => r + 1);
+                  handleRecommend();
+                  console.log("🔁 [DiaryForm] Retrying recommendation...");
+                }}
+                disabled={loading}>
                 🔁 다른 곡 추천받기
               </button>
             )}
@@ -215,7 +177,7 @@ export default function DiaryForm({ onClose, setDiaries }) {
           {previewTrack && (
             <div className="preview-player">
               <p>
-                🎧 미리듣기: {previewTrack.title} — {previewTrack.artist}
+                🎧 {previewTrack.title} — {previewTrack.artist}
               </p>
               <iframe
                 title={previewTrack.title}
@@ -228,17 +190,11 @@ export default function DiaryForm({ onClose, setDiaries }) {
           )}
         </section>
 
-        {/* 저장/취소 */}
         <div className="final-action-block">
-          <button
-            onClick={handleSave}
-            disabled={!selectedSong || loading}
-            className="primary-button">
+          <button onClick={handleSave} disabled={!selectedSong || loading}>
             {loading ? "저장 중..." : "일기 저장하기"}
           </button>
-          <button onClick={onClose} className="cancel-text-button">
-            취소
-          </button>
+          <button onClick={onClose}>취소</button>
         </div>
       </div>
     </div>

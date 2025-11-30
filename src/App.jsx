@@ -9,39 +9,56 @@ export default function App() {
   const [showForm, setShowForm] = useState(false);
   const [diaries, setDiaries] = useState([]);
 
-  // 앱 로드 시 localStorage 불러오기
+  // 앱 시작 시 localStorage에서 데이터 로드
   useEffect(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem("diaries") || "[]");
-      if (Array.isArray(saved)) setDiaries(saved);
-    } catch {
-      localStorage.removeItem("diaries");
-    }
+    const saved = JSON.parse(localStorage.getItem("diaries") || "[]");
+    setDiaries(saved);
+    console.log("📘 [App] Diaries loaded from localStorage:", saved);
   }, []);
 
-  // diaries가 바뀔 때마다 localStorage 저장
-  useEffect(() => {
-    localStorage.setItem("diaries", JSON.stringify(diaries));
-  }, [diaries]);
+  // 새 일기 추가 시 호출됨
+  const handleAddDiary = (newDiary) => {
+    const updated = [...diaries, newDiary];
+    setDiaries(updated);
+    localStorage.setItem("diaries", JSON.stringify(updated));
+    console.log("📝 [App] New diary added:", newDiary);
+  };
+
+  // 일기 삭제 시 호출됨
+  const handleDeleteDiary = (index) => {
+    const updated = diaries.filter((_, i) => i !== index);
+    setDiaries(updated);
+    localStorage.setItem("diaries", JSON.stringify(updated));
+    console.log(`🗑️ [App] Diary deleted (index: ${index})`);
+  };
 
   return (
     <Router>
       <div className="app-container">
-        <Navbar onNewDiary={() => setShowForm(true)} />
+        <Navbar
+          onNewDiary={() => {
+            console.log("🎉 [App] DiaryForm opened");
+            setShowForm(true);
+          }}
+        />
 
         <Routes>
           <Route
             path="/"
-            element={<DiaryList diaries={diaries} setDiaries={setDiaries} />}
+            element={
+              <DiaryList diaries={diaries} onDelete={handleDeleteDiary} />
+            }
           />
-
           <Route path="/report" element={<ReportPage />} />
         </Routes>
 
         {showForm && (
           <DiaryForm
-            onClose={() => setShowForm(false)}
-            setDiaries={setDiaries}
+            onClose={() => {
+              console.log("❌ [App] DiaryForm closed");
+              setShowForm(false);
+            }}
+            onSave={handleAddDiary}
           />
         )}
 
