@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 export default function Navbar({ onNewDiary }) {
-  // 🌟 useNavigate를 사용할 필요가 없어집니다!
 
   return (
     <nav className="navbar">

@@ -97,13 +97,10 @@ export async function getSongRecommendations(text, retryCount = 0) {
     return [];
   }
 }
-
 export async function getRecommendedSongsWithDetails(diaryText) {
   try {
-    // 1. 토큰 가져오기
     const token = await getSpotifyToken();
 
-    // 2. OpenAI로부터 추천 목록 (title, artist) 가져오기
     const rawRecommendations = await getSongRecommendations(diaryText);
 
     if (!rawRecommendations.length) {
@@ -111,16 +108,21 @@ export async function getRecommendedSongsWithDetails(diaryText) {
       return [];
     }
 
-    // 3. 각 추천곡을 Spotify에서 검색하여 상세 정보(albumCover, embedUrl) 가져오기
     const searchPromises = rawRecommendations.map((song) =>
       searchTrack(song, token)
     );
 
-    // 모든 검색을 병렬로 처리
+    // 3. Spotify 검색 결과들
     const detailedSongs = await Promise.all(searchPromises);
 
-    // 4. Spotify에서 검색에 성공한 트랙만 필터링 (null이 아닌 트랙)
+    // 🔥 여기 추가 (1)
+    console.log("1. detailedSongs:", detailedSongs);
+
+    // 4. null 값 필터링
     const finalRecommendations = detailedSongs.filter((song) => song !== null);
+
+    // 🔥 여기 추가 (2)
+    console.log("2. finalRecommendations:", finalRecommendations);
 
     return finalRecommendations;
   } catch (error) {

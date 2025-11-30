@@ -1,22 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import DiaryCard from "../components/DiaryCard";
 import "./DiaryList.css";
-export default function DiaryList() {
-  const [diaries, setDiaries] = useState([]);
-  console.log("DiaryList rendered : ", diaries);
+
+function DiaryList({ diaries, setDiaries }) {
   const handleDelete = (index) => {
     const updated = diaries.filter((_, i) => i !== index);
-    setDiaries(updated);
-    localStorage.setItem("diaries", JSON.stringify(updated));
+    setDiaries(updated); // App의 diaries 상태 변경
   };
-  useEffect(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem("diaries") || "[]");
-      if (Array.isArray(saved)) setDiaries(saved);
-    } catch {
-      localStorage.removeItem("diaries");
-    }
-  }, []);
 
   return (
     <div className="diary-list">
@@ -26,10 +16,16 @@ export default function DiaryList() {
         diaries
           .slice()
           .reverse()
-          .map((d, i) => (
-            <DiaryCard key={i} diary={d} onDelete={() => handleDelete(i)} />
+          .map((diary, index) => (
+            <DiaryCard
+              key={index}
+              diary={diary}
+              onDelete={() => handleDelete(index)}
+            />
           ))
       )}
     </div>
   );
 }
+
+export default React.memo(DiaryList);

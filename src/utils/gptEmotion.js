@@ -11,7 +11,7 @@ export default async function analyzeEmotion(text) {
         {
           role: "system",
           content:
-            "다음 글의 주된 감정을 한 단어로 요약해줘. 가능한 값: 행복, 슬픔, 회상, 사랑, 평온, 불안, 분노 등.",
+            "다음 글의 주된 감정을 한 단어로 요약해줘. 가능한 값: 행복, 슬픔, 사랑, 평온, 불안, 분노 ,우울만 들어가야해 ",
         },
         { role: "user", content: text },
       ],
