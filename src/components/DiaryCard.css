@@ -41,16 +41,14 @@
   position: relative;
   margin: 5px;
 }
-
-/* ===== 감정 태그 ===== */
-/* ===== 감정 태그 공통 스타일 ===== */
+/* ===== 감정 태그 기본 스타일 ===== */
 .emotion-tag {
   margin-top: 30px;
   position: absolute;
   top: -12px;
   right: 12px;
-  background: #ccc; /* 기본 회색 */
-  color: #363636;
+  background: #ccc;
+  color: #fff;
   font-size: 0.8rem;
   font-weight: 600;
   border-radius: 999px;
@@ -58,29 +56,47 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* ===== 감정별 색상 매핑 (구체화된 선택자) ===== */
+/* ===== 감정별 색상 ===== */
+
+/* 행복 (밝고 긍정적인 느낌의 옐로우) */
 .emotion-tag.emotion-행복 {
-  background: #fcbf49;
-  color: #fff;
+  background: #f9d44a;
+  color: #4a3f00;
 }
+
+/* 슬픔 (차분한 블루그레이) */
 .emotion-tag.emotion-슬픔 {
-  background: #6c757d;
+  background: #5d6d7e;
+  color: #eef2f7;
+}
+
+/* 사랑 (감성적인 로즈 핑크) */
+.emotion-tag.emotion-사랑 {
+  background: #e75480;
   color: #fff;
 }
-.emotion-tag.emotion-평온함 {
-  background: #70c1b3;
-  color: #fff;
+
+/* 평온 (편안한 민트/수양색) */
+.emotion-tag.emotion-평온 {
+  background: #7fdbb6;
+  color: #03453e;
 }
-.emotion-tag.emotion-우울 {
-  background: #b2bec3;
-  color: #fff;
-}
+
+/* 불안 (주의를 주는 앰버/오렌지) */
 .emotion-tag.emotion-불안 {
   background: #e67e22;
   color: #fff;
 }
-.emotion-tag.emotion-최상 {
-  background: #9b51e0;
+
+/* 분노 (강렬하고 공격적인 레드) */
+.emotion-tag.emotion-분노 {
+  background: #d63031;
+  color: #fff;
+}
+
+/* 우울 (어두운 그레이퍼플) */
+.emotion-tag.emotion-우울 {
+  background: #636e72;
   color: #fff;
 }
 
