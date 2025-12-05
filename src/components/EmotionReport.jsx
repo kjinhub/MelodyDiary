@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import { Pie, Bar } from "react-chartjs-2";
 
+// Chart.js에서 사용할 요소 등록 (도넛형, 막대형 차트 등)
 Chart.register(
   ArcElement,
   BarElement,
@@ -20,7 +21,7 @@ Chart.register(
   Legend
 );
 
-// 날짜 → 주차 변환 함수
+// 날짜 문자열을 기준으로 몇 번째 주인지 계산하는 유틸 함수
 function getWeekKey(dateStr) {
   const date = new Date(dateStr);
   const year = date.getFullYear();
@@ -29,9 +30,13 @@ function getWeekKey(dateStr) {
   const week = Math.ceil((dayOfYear + firstDay.getDay() + 1) / 7);
   return `${year}-W${week}`; // 예: "2025-W45"
 }
+
 export default function EmotionReport({ diaries, emotionCounts }) {
+  // 전체 감정별 통계 (Pie 차트용)
   const pieLabels = Object.keys(emotionCounts);
   const pieValues = Object.values(emotionCounts);
+
+  // 감정별 색상 매핑
   const emotionColors = {
     행복: "#FFD580",
     슬픔: "#A57DFF",
@@ -42,7 +47,7 @@ export default function EmotionReport({ diaries, emotionCounts }) {
     분노: "#FF7F50",
   };
 
-  // ② 주간 감정 변화 부분 (그대로)
+  // 주차별 감정 데이터를 집계
   const weeklyData = {};
   diaries.forEach((d) => {
     const weekKey = getWeekKey(d.date);
@@ -50,19 +55,22 @@ export default function EmotionReport({ diaries, emotionCounts }) {
     weeklyData[weekKey][d.emotion] = (weeklyData[weekKey][d.emotion] || 0) + 1;
   });
 
+  // 전체 등장 감정 목록 및 주차 목록 정렬
   const emotions = [...new Set(diaries.map((d) => d.emotion))];
   const weeks = Object.keys(weeklyData).sort();
 
+  // 각 감정별 데이터셋 생성 (막대 그래프용)
   const datasets = emotions.map((emotion) => ({
     label: emotion,
     data: weeks.map((w) => weeklyData[w][emotion] || 0),
-    backgroundColor: emotionColors[emotion] || "#CCCCCC", // fallback
+    backgroundColor: emotionColors[emotion] || "#CCCCCC",
   }));
 
   const barData = { labels: weeks, datasets };
-  // pieLabels: ["행복", "슬픔", "분노", ...]
+
+  // 파이 차트용 데이터 구성
   const pieBackgroundColors = pieLabels.map(
-    (emotion) => emotionColors[emotion] || "#CCCCCC" // fallback: 회색
+    (emotion) => emotionColors[emotion] || "#CCCCCC"
   );
 
   const pieData = {
@@ -74,15 +82,21 @@ export default function EmotionReport({ diaries, emotionCounts }) {
       },
     ],
   };
+
+  // 감정 통계 리포트 렌더링
   return (
     <div className="report">
       <h2>감정 리포트</h2>
+
+      {/* 전체 감정 비율 (Pie 차트) */}
       <div className="chart-section">
         <h3>전체 감정 비율</h3>
         <div className="chart-box">
           <Pie data={pieData} />
         </div>
       </div>
+
+      {/* 주간 감정 변화 (Bar 차트) */}
       <div className="chart-section">
         <h3>주간 감정 변화</h3>
         <div className="chart-box">

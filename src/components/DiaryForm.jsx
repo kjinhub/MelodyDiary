@@ -1,16 +1,18 @@
 import React, { useState, useRef } from "react";
 import "../styles/components/DiaryForm.css";
 import { useDiaryContext } from "../context/DiaryContext";
-
 import analyzeEmotion from "../utils/gptEmotion";
 import {
   getSpotifyToken,
   searchTrack,
   getSongRecommendations,
 } from "../utils/spotify";
-export default function DiaryForm({ onClose }) {
-  const { addDiary } = useDiaryContext(); // ✅ Context에서 직접 가져옴
 
+export default function DiaryForm({ onClose }) {
+  // 전역 컨텍스트에서 일기 추가 함수 가져오기
+  const { addDiary } = useDiaryContext();
+
+  // 로컬 상태 정의
   const [text, setText] = useState("");
   const [image, setImage] = useState(null);
   const [songs, setSongs] = useState([]);
@@ -20,62 +22,53 @@ export default function DiaryForm({ onClose }) {
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef(null);
 
-  console.log("📂 [DiaryForm] Component rendered");
-
+  // 이미지 파일을 읽어 미리보기로 표시
   const handleFileRead = (file) => {
     const reader = new FileReader();
     reader.onload = () => setImage(reader.result);
     reader.readAsDataURL(file);
-    console.log("🖼️ [DiaryForm] Image uploaded:", file.name);
   };
 
+  // OpenAI 기반으로 일기 내용에서 추천 곡 요청
   const handleRecommend = async () => {
     if (!text.trim()) return alert("먼저 일기를 작성하세요.");
     setLoading(true);
-    console.log("🎧 [DiaryForm] Requesting song recommendations...");
-
     try {
       const songList = await getSongRecommendations(text);
       setSongs(songList);
       setSelectedSong(null);
       setPreviewTrack(null);
-      console.log("✅ [DiaryForm] Recommended songs received:", songList);
-    } catch (err) {
-      console.error("❌ [DiaryForm] Song recommendation failed:", err);
+    } catch {
       alert("노래 추천 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
   };
 
+  // 선택한 노래를 Spotify에서 미리듣기 로드
   const handlePreview = async (song) => {
-    console.log("▶️ [DiaryForm] Previewing song:", song);
     try {
       setSelectedSong(song);
       setPreviewTrack(null);
-
       const token = await getSpotifyToken();
       const track = await searchTrack(song, token);
-
       if (track?.embedUrl) setPreviewTrack(track);
-      console.log("🎵 [DiaryForm] Spotify track preview loaded:", track);
-    } catch (err) {
-      console.error("❌ [DiaryForm] Preview failed:", err);
+    } catch {
+      console.error("미리듣기 실패");
     }
   };
 
+  // 일기와 선택된 노래를 저장
   const handleSave = async () => {
     if (!text || !selectedSong) return alert("일기와 노래를 선택하세요.");
     setLoading(true);
-    console.log("💾 [DiaryForm] Saving diary...");
-
     try {
       const emotion = await analyzeEmotion(text);
       const token = await getSpotifyToken();
       const track = await searchTrack(selectedSong, token);
 
       const newDiary = {
-        id: crypto.randomUUID(), // ✅ 브라우저 내장 UUID로 고유 식별자 생성
+        id: crypto.randomUUID(),
         text,
         emotion,
         song: track,
@@ -83,13 +76,10 @@ export default function DiaryForm({ onClose }) {
         date: new Date().toISOString().slice(0, 10),
       };
 
-      addDiary(newDiary); // ✅ props 대신 Context 함수 호출
-
+      addDiary(newDiary);
       alert("일기가 저장되었습니다!");
       onClose();
-      console.log("✅ [DiaryForm] Diary saved successfully:", newDiary);
-    } catch (err) {
-      console.error("❌ [DiaryForm] Save failed:", err);
+    } catch {
       alert("일기 저장 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
@@ -100,8 +90,9 @@ export default function DiaryForm({ onClose }) {
     <div className="overlay" onClick={onClose}>
       <div
         className="form-box"
-        onClick={(e) => e.stopPropagation()} // ✅ 회색 배경 클릭 시 닫힘
+        onClick={(e) => e.stopPropagation()} // 배경 클릭 시 닫힘 방지
       >
+        {/* 헤더 영역 */}
         <div className="header-container">
           <h2 className="modal-title">새로운 일기 작성</h2>
           <button className="close-button" onClick={onClose}>
@@ -109,6 +100,7 @@ export default function DiaryForm({ onClose }) {
           </button>
         </div>
 
+        {/* 사진 업로드 영역 */}
         <section className="photo-section">
           <h3>오늘의 사진</h3>
           <label
@@ -145,6 +137,7 @@ export default function DiaryForm({ onClose }) {
           />
         </section>
 
+        {/* 일기 작성 영역 */}
         <section className="text-section">
           <h3>오늘의 이야기</h3>
           <textarea
@@ -154,6 +147,7 @@ export default function DiaryForm({ onClose }) {
           />
         </section>
 
+        {/* 노래 추천 영역 */}
         <section className="song-section">
           <div className="form-actions recommend-actions">
             <button onClick={handleRecommend} disabled={loading}>
@@ -174,6 +168,7 @@ export default function DiaryForm({ onClose }) {
             </div>
           )}
 
+          {/* 미리듣기 플레이어 */}
           {previewTrack && (
             <div className="preview-player">
               <p>
@@ -190,6 +185,7 @@ export default function DiaryForm({ onClose }) {
           )}
         </section>
 
+        {/* 저장 및 취소 버튼 */}
         <div className="final-action-block">
           <button onClick={handleSave} disabled={!selectedSong || loading}>
             {loading ? "저장 중..." : "일기 저장하기"}
