@@ -63,25 +63,36 @@ AI가 일기 내용을 분석해 어울리는 음악을 추천하고, Spotify에
 ## ⚙️ 프로젝트 구조
 
 ```
-melody-diary/
-├── src/
-│ ├── App.jsx
-│ ├── lib/
-│ │ ├── gpt.js
-│ │ └── spotify.js
-│ ├── components/
-│ │ ├── DiaryEditor.jsx
-│ │ ├── DiaryList.jsx
-│ │ ├── DiaryItem.jsx
-│ │ └── ImageUploader.jsx
-│ ├── assets/
-│ │ └── placeholder.jpg
-│ ├── App.css
-│ └── main.jsx
-├── .env
-├── .gitignore
-├── package.json
-└── README.md
+src/
+├── App.jsx                        # 앱 전체 루트 컴포넌트 (라우팅 + Provider)
+│
+├── components/
+│   ├── Navbar.jsx                 # 상단 네비게이션 바
+│   ├── DiaryCard.jsx              # 일기 요약 카드
+│   ├── DiaryDetailModal.jsx       # 일기 상세 보기 모달
+│   ├── DiaryForm.jsx              # 새 일기 작성 폼
+│   ├── EmotionReport.jsx          # 감정 통계 차트 컴포넌트
+│
+├── context/
+│   └── DiaryContext.jsx           # Context API (일기/찜 상태 전역 관리)
+│
+├── hooks/
+│   ├── useDiaries.js              # 로컬 스토리지 기반 일기 CRUD 훅
+│   ├── useFavorites.js            # 음악 찜(즐겨찾기) 상태 관리 훅
+│   └── useReportData.js           # 감정 통계 및 리포트 데이터 생성 훅
+│
+├── pages/
+│   ├── DiaryList.jsx              # 일기 목록 페이지
+│   └── ReportPage.jsx             # 감정 리포트 페이지
+│
+├── styles/
+│   ├── components/                # 각 컴포넌트별 스타일
+│   └── pages/                     # 페이지별 스타일
+│
+└── utils/
+    ├── spotify.js                 # Spotify + OpenAI 음악 추천 로직
+    └── gptEmotion.js              # OpenAI 기반 감정 분석 함수
+
 ```
 
 ---
