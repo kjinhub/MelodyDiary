@@ -18,8 +18,9 @@ export default function useDiaries() {
   };
 
   // 삭제
-  const deleteDiary = (index) => {
-    const updated = diaries.filter((_, i) => i !== index);
+  const deleteDiary = (targetId) => {
+    const updated = diaries.filter((d) => d.id !== targetId);
+
     setDiaries(updated);
     localStorage.setItem("diaries", JSON.stringify(updated));
   };

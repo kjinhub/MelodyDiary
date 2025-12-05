@@ -1,14 +1,14 @@
-// src/pages/ReportPage.jsx
 import React from "react";
 import EmotionReport from "../components/EmotionReport";
-import { useReportData } from "../hooks/useReportData";
 import "../styles/pages/ReportPage.css";
+import { useDiaryContext } from "../context/DiaryContext";
+import { useReportData } from "../hooks/useReportData";
 
-export default function ReportPage({ favoriteSongs }) {
-  const savedDiaries = JSON.parse(localStorage.getItem("diaries") || "[]");
+export default function ReportPage() {
+  const { favoriteSongs, diaries } = useDiaryContext();
   const { recentTracks, total, emotionCounts, mostEmotion } = useReportData(
     favoriteSongs,
-    savedDiaries
+    diaries
   );
 
   if (total === 0) {
@@ -24,6 +24,7 @@ export default function ReportPage({ favoriteSongs }) {
 
   return (
     <div className="report-page">
+      {/* 요약 섹션 */}
       <div className="summary-section">
         <div className="summary-card">
           <h3>전체 일기</h3>
@@ -39,10 +40,12 @@ export default function ReportPage({ favoriteSongs }) {
         </div>
       </div>
 
+      {/* 차트 섹션 */}
       <div className="charts-inline">
-        <EmotionReport diaries={savedDiaries} emotionCounts={emotionCounts} />
+        <EmotionReport diaries={diaries} emotionCounts={emotionCounts} />
       </div>
 
+      {/* 찜한 음악 섹션 */}
       <div className="recent-tracks-gallery">
         <h3>찜한 음악 🎧</h3>
         <div className="track-thumbnails">

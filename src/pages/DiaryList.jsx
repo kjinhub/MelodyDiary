@@ -1,8 +1,11 @@
 import React from "react";
 import DiaryCard from "../components/DiaryCard";
 import "../styles/pages/DiaryList.css";
+import { useDiaryContext } from "../context/DiaryContext";
 
-export default function DiaryList({ diaries, onDelete, onFavorite }) {
+export default function DiaryList() {
+  const { diaries, deleteDiary, toggleFavorite } = useDiaryContext();
+
   if (!Array.isArray(diaries)) return <p>데이터 오류 발생</p>;
 
   return (
@@ -13,12 +16,12 @@ export default function DiaryList({ diaries, onDelete, onFavorite }) {
         diaries
           .slice()
           .reverse()
-          .map((d, i) => (
+          .map((d) => (
             <DiaryCard
-              key={i}
+              key={d.id} // ✅ id를 key로 써주는 게 더 안전
               diary={d}
-              onDelete={() => onDelete(i)}
-              onFavorite={onFavorite} // ⭐ DiaryCard에 이벤트 전달
+              onDelete={() => deleteDiary(d.id)} // ✅ id 기반 삭제
+              onFavorite={toggleFavorite}
             />
           ))
       )}

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import "../styles/components/DiaryForm.css";
+import { useDiaryContext } from "../context/DiaryContext";
 
 import analyzeEmotion from "../utils/gptEmotion";
 import {
@@ -7,8 +8,9 @@ import {
   searchTrack,
   getSongRecommendations,
 } from "../utils/spotify";
+export default function DiaryForm({ onClose }) {
+  const { addDiary } = useDiaryContext(); // ✅ Context에서 직접 가져옴
 
-export default function DiaryForm({ onClose, onSave }) {
   const [text, setText] = useState("");
   const [image, setImage] = useState(null);
   const [songs, setSongs] = useState([]);
@@ -73,6 +75,7 @@ export default function DiaryForm({ onClose, onSave }) {
       const track = await searchTrack(selectedSong, token);
 
       const newDiary = {
+        id: crypto.randomUUID(), // ✅ 브라우저 내장 UUID로 고유 식별자 생성
         text,
         emotion,
         song: track,
@@ -80,7 +83,7 @@ export default function DiaryForm({ onClose, onSave }) {
         date: new Date().toISOString().slice(0, 10),
       };
 
-      onSave(newDiary);
+      addDiary(newDiary); // ✅ props 대신 Context 함수 호출
 
       alert("일기가 저장되었습니다!");
       onClose();
@@ -94,8 +97,11 @@ export default function DiaryForm({ onClose, onSave }) {
   };
 
   return (
-    <div className="overlay">
-      <div className="form-box">
+    <div className="overlay" onClick={onClose}>
+      <div
+        className="form-box"
+        onClick={(e) => e.stopPropagation()} // ✅ 회색 배경 클릭 시 닫힘
+      >
         <div className="header-container">
           <h2 className="modal-title">새로운 일기 작성</h2>
           <button className="close-button" onClick={onClose}>
