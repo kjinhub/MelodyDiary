@@ -1,5 +1,4 @@
 .navbar {
-  /* 기존 스타일 유지 */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,18 +8,21 @@
   border-bottom: 1px solid #f0e8ff;
 }
 
+/* 로고 스타일 */
 .logo {
   font-weight: 600;
   font-size: 1.3rem;
   color: #a57dff;
   cursor: pointer;
-
-  /* 🌟 추가: 밑줄 제거 */
-  text-decoration: none;
+  text-decoration: none; /* 🌟 밑줄 제거 */
 }
-/* ... 나머지 CSS 코드 ... */
 
-/* ⚠️ 수정 필요: nav-links 내부의 <button>이 <a> (Link)로 변경되었으므로 선택자를 수정합니다. */
+/* 네비게이션 링크 */
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
 .nav-links a {
   background: none;
   border: none;
@@ -29,20 +31,16 @@
   cursor: pointer;
   color: #666;
   transition: color 0.2s ease;
-
-  /* Link는 기본적으로 밑줄이 생기므로 제거합니다. */
-  text-decoration: none;
-  /* Link는 기본적으로 인라인 요소이므로, 버튼처럼 취급하기 위해 인라인 블록으로 설정합니다. */
+  text-decoration: none; /* 링크 밑줄 제거 */
   display: inline-block;
-  padding: 0; /* 기존 버튼에 패딩이 없었으므로 0으로 설정 */
+  padding: 0;
 }
 
-/* ⚠️ 수정 필요: 호버 시 스타일도 <a> 태그에 적용합니다. */
 .nav-links a:hover {
   color: #a57dff;
 }
 
-/* 새 일기 작성 버튼 스타일 유지 */
+/* 새 일기 버튼 */
 .new-btn {
   background: #a57dff;
   color: white;
@@ -51,9 +49,32 @@
   padding: 0.6rem 1.2rem;
   cursor: pointer;
   font-weight: 500;
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .new-btn:hover {
-  opacity: 0.8;
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* ✅ 반응형 대응 */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1rem;
+    align-items: stretch;
+  }
+
+  .nav-links {
+    justify-content: center;
+  }
+
+  .new-btn {
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 0.7rem;
+    border-radius: 10px;
+  }
 }

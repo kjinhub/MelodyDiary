@@ -134,10 +134,7 @@
 .insight-card.reminiscence p {
   color: #b68cf2;
 }
-
-/* ------------------------------ */
-/* 🎧 찜한 음악 카드 섹션        */
-/* ------------------------------ */
+/* 🎧 찜한 음악 카드 섹션 */
 .report-page .recent-tracks-gallery {
   margin-top: 2rem;
   text-align: center;
@@ -146,31 +143,22 @@
 .report-page .track-thumbnails {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 30px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 10px;
-  flex-wrap: nowrap; /* 가로 스크롤 유지 */
+  gap: 1rem;
+  flex-wrap: wrap; /* ✅ 줄바꿈 허용 */
+  padding: 1rem;
 }
 
-.report-page .track-thumbnails::-webkit-scrollbar {
-  height: 6px;
-}
-.report-page .track-thumbnails::-webkit-scrollbar-thumb {
-  background: #c9b4ff;
-  border-radius: 10px;
-}
-
+/* ✅ 반드시 추가: 각 카드 기준을 relative로 지정 */
 .report-page .track-item {
-  width: 160px;
-  height: 160px;
+  position: relative; /* ✅ 오버레이 기준 고정 */
+  width: 150px;
   border-radius: 12px;
   overflow: hidden;
-  position: relative;
+  text-align: center;
+  transition: transform 0.2s ease;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.25s ease;
 }
 
 .report-page .track-item:hover {
@@ -179,7 +167,7 @@
 
 .report-page .track-item img {
   width: 100%;
-  height: 100%;
+  height: 150px;
   object-fit: cover;
   display: block;
 }
@@ -188,12 +176,15 @@
 .report-page .track-info {
   position: absolute;
   bottom: 0;
+  left: 0;
   width: 100%;
   padding: 8px 10px;
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(4px);
   color: #fff;
   text-align: center;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .report-page .track-title-text {
@@ -208,45 +199,35 @@
   opacity: 0.9;
 }
 
-/* --- 모바일 반응형 --- */
-@media (max-width: 768px) {
-  .report-page .track-item {
-    width: 120px;
-    height: 120px;
-  }
-
-  .report-page .track-title-text {
-    font-size: 0.85rem;
-  }
-
-  .report-page .track-artist-text {
-    font-size: 0.75rem;
-  }
-
-  .report-page .track-thumbnails {
-    gap: 15px;
-  }
-}
-
-/* ------------------------------ */
-/*            반응형              */
-/* ------------------------------ */
-@media (max-width: 768px) {
+/* ✅ 모바일 대응 */
+@media (max-width: 480px) {
   .report-page {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 
   .summary-section {
-    flex-direction: column;
-    align-items: center;
+    gap: 1rem;
   }
 
-  .charts-section {
-    flex-direction: column;
-    align-items: center;
+  .summary-card {
+    width: 100%;
+    padding: 1rem;
   }
 
-  .report-page .recent-tracks-gallery {
-    max-width: 50%;
+  .track-thumbnails {
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .track-item {
+    width: 100px;
+  }
+
+  .track-item img {
+    height: 100px;
+  }
+
+  .track-info p {
+    font-size: 0.75rem;
   }
 }
