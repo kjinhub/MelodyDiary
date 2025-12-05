@@ -2,10 +2,9 @@
 import React from "react";
 // Link 컴포넌트를 가져옵니다.
 import { Link } from "react-router-dom";
-import "./Navbar.css";
+import "../styles/components/Navbar.css";
 
 export default function Navbar({ onNewDiary }) {
-
   return (
     <nav className="navbar">
       <Link to="/" className="logo">

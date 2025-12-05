@@ -1,5 +1,5 @@
 import React from "react";
-import "./DiaryDetailModal.css";
+import "../styles/components/DiaryDetailModal.css";
 export default function DiaryDetailModal({ diary, onClose }) {
   console.log(diary);
 

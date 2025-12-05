@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "./DiaryForm.css";
+import "../styles/components/DiaryForm.css";
 
 import analyzeEmotion from "../utils/gptEmotion";
 import {

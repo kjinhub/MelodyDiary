@@ -1,6 +1,6 @@
 import React from "react";
 import DiaryCard from "../components/DiaryCard";
-import "./DiaryList.css";
+import "../styles/pages/DiaryList.css";
 
 export default function DiaryList({ diaries, onDelete, onFavorite }) {
   if (!Array.isArray(diaries)) return <p>데이터 오류 발생</p>;

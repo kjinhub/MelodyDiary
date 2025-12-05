@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DiaryDetailModal from "./DiaryDetailModal";
-import "./DiaryCard.css";
+import "../styles/components/DiaryCard.css";
 
 export default function DiaryCard({ diary, onDelete, onFavorite }) {
   const [open, setOpen] = useState(false);

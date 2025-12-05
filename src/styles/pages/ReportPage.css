@@ -9,89 +9,6 @@
   background: linear-gradient(180deg, #fff9ff 0%, #f8f3ff 100%);
   min-height: 100vh;
 }
-/* --- 최근 음악 앨범 크기 확대 --- */
-.track-item {
-  width: 150px; /* 기존 110px → 증가 */
-  height: 150px; /* 기존 110px → 증가 */
-  overflow: hidden;
-  border-radius: 12px;
-  position: relative;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.25s ease;
-}
-
-.track-item:hover {
-  transform: scale(1.07);
-}
-
-.track-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* 🔥 오버레이(노래 제목/아티스트) 확대 */
-.track-info {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 8px 10px; /* 패딩 증가 */
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(4px);
-  color: white;
-  text-align: center;
-}
-
-/* 제목 텍스트 크기 증가 */
-.track-title-text {
-  margin: 0;
-  font-size: 0.9rem; /* 기존 0.7rem → 확대 */
-  font-weight: 600;
-}
-
-/* 아티스트 텍스트 크기 증가 */
-.track-artist-text {
-  margin: 2px 0 0;
-  font-size: 0.8rem; /* 기존 0.65rem → 확대 */
-  opacity: 0.9;
-}
-.track-thumbnails {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-
-  overflow-x: auto; /* 가로 스크롤 허용 */
-  overflow-y: hidden;
-  padding-bottom: 10px;
-
-  flex-wrap: nowrap; /* 줄바꿈 금지 → 가로 유지 */
-}
-
-.track-thumbnails::-webkit-scrollbar {
-  height: 6px;
-}
-
-.track-thumbnails::-webkit-scrollbar-thumb {
-  background: #c9b4ff;
-  border-radius: 10px;
-}
-
-/* --- 모바일 반응형: 최소 120px 유지 --- */
-@media (max-width: 768px) {
-  .track-item {
-    width: 120px;
-    height: 120px;
-  }
-
-  .track-title-text {
-    font-size: 0.85rem;
-  }
-
-  .track-artist-text {
-    font-size: 0.75rem;
-  }
-}
 
 /* ------------------------------ */
 /*          상세 보기 버튼        */
@@ -219,20 +136,104 @@
 }
 
 /* ------------------------------ */
+/* 🎧 찜한 음악 카드 섹션        */
+/* ------------------------------ */
+.report-page .recent-tracks-gallery {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.report-page .track-thumbnails {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+  flex-wrap: nowrap; /* 가로 스크롤 유지 */
+}
+
+.report-page .track-thumbnails::-webkit-scrollbar {
+  height: 6px;
+}
+.report-page .track-thumbnails::-webkit-scrollbar-thumb {
+  background: #c9b4ff;
+  border-radius: 10px;
+}
+
+.report-page .track-item {
+  width: 160px;
+  height: 160px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s ease;
+}
+
+.report-page .track-item:hover {
+  transform: scale(1.07);
+}
+
+.report-page .track-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 🔥 오버레이(노래 제목/아티스트) */
+.report-page .track-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  text-align: center;
+}
+
+.report-page .track-title-text {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.report-page .track-artist-text {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+/* --- 모바일 반응형 --- */
+@media (max-width: 768px) {
+  .report-page .track-item {
+    width: 120px;
+    height: 120px;
+  }
+
+  .report-page .track-title-text {
+    font-size: 0.85rem;
+  }
+
+  .report-page .track-artist-text {
+    font-size: 0.75rem;
+  }
+
+  .report-page .track-thumbnails {
+    gap: 15px;
+  }
+}
+
+/* ------------------------------ */
 /*            반응형              */
 /* ------------------------------ */
 @media (max-width: 768px) {
   .report-page {
     padding: 1.5rem;
-  }
-
-  .track-thumbnails {
-    gap: 15px;
-  }
-
-  .track-item {
-    width: 90px;
-    height: 90px;
   }
 
   .summary-section {
@@ -245,7 +246,7 @@
     align-items: center;
   }
 
-  .recent-tracks-gallery {
-    max-width: 100%;
+  .report-page .recent-tracks-gallery {
+    max-width: 50%;
   }
 }

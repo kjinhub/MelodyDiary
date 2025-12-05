@@ -1,4 +1,4 @@
-import "./EmotionReport.css";
+import "../styles/components/EmotionReport.css";
 import React from "react";
 import {
   Chart,
