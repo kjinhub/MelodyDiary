@@ -68,7 +68,7 @@ export default function EmotionReport({ diaries, emotionCounts }) {
 
   const barData = { labels: weeks, datasets };
 
-  // 파이 차트용 데이터 구성
+  // 파이 차트용 데이터 구성..
   const pieBackgroundColors = pieLabels.map(
     (emotion) => emotionColors[emotion] || "#CCCCCC"
   );
